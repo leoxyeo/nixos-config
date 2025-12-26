@@ -10,29 +10,12 @@
       ./hardware-configuration.nix
     ];
 
-  # Bootloader.
-  boot = {
-  	loader = {
-    		efi = {
-			canTouchEfiVariables = true;
-			};
-    		systemd-boot = {
-  			enable = true;
-			consoleMode = "max";
-			};
-		};
-	initrd ={
-		kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
-	};
-	kernelPackages = pkgs.linuxPackages_latest;
-	kernelParams = [
-	"video=DP-1:2560x1440@60"
-	"nvidia-drm.modeset=1"
-	];
-	};
+  # Bootloader
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.systemd-boot.enable = true;
 
   # Use latest kernel.
-  # boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   networking.hostName = "nixos";
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -54,7 +37,6 @@
 
   # Set your time zone.
   time.timeZone = "Europe/Kyiv";
-
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
